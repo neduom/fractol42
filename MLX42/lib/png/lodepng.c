@@ -1135,7 +1135,7 @@ static unsigned getTreeInflateDynamic(HuffmanTree* tree_ll, HuffmanTree* tree_d,
       ERROR_BREAK(50); /*error: the bit pointer is or will go past the memory*/
     }
     for(i = 0; i != HCLEN; ++i) {
-      ensureBits9(reader, 3); /*out of bounds already checked above */
+      ensureBits9(reader, 3); /*out of bounds already checkd above */
       bitlen_cl[CLCL_ORDER[i]] = readBits(reader, 3);
     }
     for(i = HCLEN; i != NUM_CODE_LENGTH_CODES; ++i) {
@@ -3564,7 +3564,7 @@ static void getPixelColorRGBA8(unsigned char* r, unsigned char* g,
       size_t j = i * mode->bitdepth;
       index = readBitsFromReversedStream(&j, in, mode->bitdepth);
     }
-    /*out of bounds of palette not checked: see lodepng_color_mode_alloc_palette.*/
+    /*out of bounds of palette not checkd: see lodepng_color_mode_alloc_palette.*/
     *r = mode->palette[index * 4 + 0];
     *g = mode->palette[index * 4 + 1];
     *b = mode->palette[index * 4 + 2];
@@ -3654,14 +3654,14 @@ static void getPixelColorsRGBA8(unsigned char* LODEPNG_RESTRICT buffer, size_t n
     if(mode->bitdepth == 8) {
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned index = in[i];
-        /*out of bounds of palette not checked: see lodepng_color_mode_alloc_palette.*/
+        /*out of bounds of palette not checkd: see lodepng_color_mode_alloc_palette.*/
         lodepng_memcpy(buffer, &mode->palette[index * 4], 4);
       }
     } else {
       size_t j = 0;
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned index = readBitsFromReversedStream(&j, in, mode->bitdepth);
-        /*out of bounds of palette not checked: see lodepng_color_mode_alloc_palette.*/
+        /*out of bounds of palette not checkd: see lodepng_color_mode_alloc_palette.*/
         lodepng_memcpy(buffer, &mode->palette[index * 4], 4);
       }
     }
@@ -3728,14 +3728,14 @@ static void getPixelColorsRGB8(unsigned char* LODEPNG_RESTRICT buffer, size_t nu
     if(mode->bitdepth == 8) {
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned index = in[i];
-        /*out of bounds of palette not checked: see lodepng_color_mode_alloc_palette.*/
+        /*out of bounds of palette not checkd: see lodepng_color_mode_alloc_palette.*/
         lodepng_memcpy(buffer, &mode->palette[index * 4], 3);
       }
     } else {
       size_t j = 0;
       for(i = 0; i != numpixels; ++i, buffer += num_channels) {
         unsigned index = readBitsFromReversedStream(&j, in, mode->bitdepth);
-        /*out of bounds of palette not checked: see lodepng_color_mode_alloc_palette.*/
+        /*out of bounds of palette not checkd: see lodepng_color_mode_alloc_palette.*/
         lodepng_memcpy(buffer, &mode->palette[index * 4], 3);
       }
     }
@@ -4066,7 +4066,7 @@ unsigned lodepng_compute_color_stats(LodePNGColorStats* stats,
       getPixelColorRGBA8(&r, &g, &b, &a, in, i, mode_in);
 
       if(!bits_done && stats->bits < 8) {
-        /*only r is checked, < 8 bits is only relevant for grayscale*/
+        /*only r is checkd, < 8 bits is only relevant for grayscale*/
         unsigned bits = getValueRequiredBits(r);
         if(bits > stats->bits) stats->bits = bits;
       }
@@ -6246,7 +6246,7 @@ static unsigned isGrayICCProfile(const unsigned char* profile, unsigned size) {
   It is a gray profile if bytes 16-19 are "GRAY", rgb profile if bytes 16-19
   are "RGB ". We do not perform any full parsing of the ICC profile here, other
   than check those 4 bytes to grayscale profile. Other than that, validity of
-  the profile is not checked. This is needed only because the PNG specification
+  the profile is not checkd. This is needed only because the PNG specification
   requires using a non-gray color model if there is an ICC profile with "RGB "
   (sadly limiting compression opportunities if the input data is grayscale RGB
   data), and requires using a gray color model if it is "GRAY".

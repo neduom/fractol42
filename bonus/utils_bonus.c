@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 12:27:16 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/22 13:17:10 by mel-moud         ###   ########.fr       */
+/*   Created: 2025/02/17 12:18:36 by mel-moud          #+#    #+#             */
+/*   Updated: 2025/02/22 13:26:42 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractol_bonus.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -54,5 +54,3 @@ double	scale(double value, double min, double max, double dimension)
 {
 	return ((value / dimension) * (max - min) + min);
 }
-
-// trim 

@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
+/*   fractol_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 12:30:18 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/22 14:49:32 by mel-moud         ###   ########.fr       */
+/*   Created: 2025/02/17 12:16:13 by mel-moud          #+#    #+#             */
+/*   Updated: 2025/02/22 13:28:06 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-#define FRACTOL_H
+#ifndef FRACTOL_BONUS_H
+# define FRACTOL_BONUS_H
 
 #include "../MLX42/include/MLX42/MLX42.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
 
 # define WIDTH 1200
-# define HEIGHT 900
+# define HEIGHT 920
 
 typedef struct s_complex
 {
@@ -39,30 +40,24 @@ typedef struct s_fractol
     int         max_iterations;
     double      zoom;
     double      scale;
+    int         color_shift;
 }               t_fractol;
 
 char	*ft_strdup(const char *s);
-char    *check(int ac, char **av, t_fractol *fractol);
+char    *check(int ac, char **av, t_fractol *fractal);
 
-int	    ft_strlen(const char *s);
-int     ft_strcmp(const char *s1, const char *s2);
-int     get_rgb(int red, int blue, int alpha);
-int     get_color(int i, t_fractol *fract);
-int     my_digit(char c);
-
-
+void    burning_ship(t_fractol *fractal);
+void    draw_burning_ship(t_fractol *fractal);
 void    ft_free(void ** av);
 void    clean(t_fractol *fract);
-void    error_exit(t_fractol *fract, int flag);
-void    julia(t_fractol *fractal, int x, int y);
-void    draw_julia(t_fractol *fractal);
-void    mandelbrot(t_fractol *fractal);
-void    draw_mandelbrot(t_fractol *fractal);
-void    handle_exit(t_fractol *fractal);
-void    handle_zoom_iterations(t_fractol *fractal);
-void    controls(void *arg);
-void scroll(double x, double y, void *param);
+void    handle_movement(t_fractol *fractal, double move_step);
+void    control(void *arg);
 
-double  ft_atof(char *str);
+int     ft_strcmp(const char *s1, const char *s2);
+int     ft_strlen(const char *s);
+int     get_color(int i, t_fractol *fractal);
+int     get_rgb(int blue, int alpha);
+void    scroll(double x, double y, void* param);
 double	scale(double value, double min, double max, double dimension);
-#endif
+
+#endif 

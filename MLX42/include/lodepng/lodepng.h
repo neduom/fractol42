@@ -1168,7 +1168,7 @@ unsigned compress(std::vector<unsigned char>& out, const std::vector<unsigned ch
 
 /*
 TODO:
-[.] test if there are no memory leaks or security exploits - done a lot but needs to be checked often
+[.] test if there are no memory leaks or security exploits - done a lot but needs to be checkd often
 [.] check compatibility with various compilers  - done but needs to be redone for every newer version
 [X] converting color to 16-bit per channel types
 [X] support color profile chunk types (but never let them touch RGB values by default)

@@ -6,15 +6,15 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:56:34 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/16 21:13:37 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:50:31 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int get_rgb(int red, int green, int blue, int alpha)
+int get_rgb(int red, int blue, int alpha)
 {
-    return (red << 24 | green << 16 | blue << 8 | alpha);
+    return (red << 24 | blue << 8 | alpha);
 }
 
 int get_color(int i, t_fractol *fract)
@@ -22,45 +22,61 @@ int get_color(int i, t_fractol *fract)
     double  ratio;
 
     ratio = (double)i / fract->max_iterations;
-    int blue = (int)(1 * (1 - ratio) * ratio * ratio * ratio * 255);  // Moved blue formula to red
-    int green = (int)(2 * (1 - ratio) * (1 - ratio) * ratio * ratio * 255);
-    int red = (int)(10 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 255); // Moved red formula to blue
-    return (get_rgb(red, green, blue, 255));
+    int blue = (int)(100 * (1 - ratio) * ratio * ratio * ratio * 255);
+    int red = (int)(9 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 255);
+    return (get_rgb(red, blue, 255));
 }
 
-
-char    *checke(int ac, char **av, t_fractol *fractol)
+char    *check(int ac, char **av, t_fractol *fractol)
 {
-    if (ac < 2)
-        return (NULL);
+    /// trim 
     if (!ft_strcmp(av[1], "mandelbrot"))
+    {
+        if(ac!=2){
+            write (2, "Error\n", 6);
+            exit(EXIT_FAILURE);
+            }
+        fractol->scale = 1.0;
+        fractol->move.real = 2.0;
+        fractol->move.img = 2.0;
         return (ft_strdup("mandelbrot"));
+    }
     else if (!ft_strcmp(av[1], "julia"))
     {
-        if (ac < 4)
-            return (NULL);
-        fractol->c.real = atof(av[2]);
-        fractol->c.img = atof(av[3]);
+        if (ac != 4)
+            (write (2, "Error\n", 6), exit(EXIT_FAILURE));
+        fractol->c.real = ft_atof(av[2]);
+        fractol->c.img = ft_atof(av[3]);
         fractol->scale = 1.0;
         fractol->move.real = 2.0;
         fractol->move.img = 2.0;
         return (ft_strdup("julia"));
     }
-    return (NULL);
+    (write (2, "Error\n", 6), exit(EXIT_FAILURE));
+}
+void scroll(double x, double y, void *param)
+{
+    t_fractol *fractal = (t_fractol *)param;
+    double zoom_factor = 1.1;
+
+    (void)x;
+    if (y > 0)
+        fractal->zoom /= zoom_factor;
+    else if (y < 0)
+        fractal->zoom *= zoom_factor;
 }
 
 int main(int ac ,char **av)
 {
     t_fractol   fractal;
-
+    if (HEIGHT < 0 || WIDTH < 0)
+        (write (2, "Error\n", 6), exit(1));
     fractal.mlx = NULL;
     fractal.image = NULL;
-    fractal.fract_name = checke(ac, av, &fractal);
-    if (!fractal.fract_name)
-    {
-        ft_putendl_fd("Error", 2);
-        exit(EXIT_FAILURE);
-    }
+    if(ac>1)
+         fractal.fract_name = check(ac, av, &fractal); 
+    else
+        (write (2, "Error\n", 6), exit(EXIT_FAILURE));
     fractal.mlx = mlx_init(WIDTH, HEIGHT, fractal.fract_name, false);
     if (!fractal.mlx)
         return (1);
@@ -70,10 +86,9 @@ int main(int ac ,char **av)
     fractal.max_iterations = 100;
     fractal.zoom = 1.0;
     mlx_image_to_window(fractal.mlx, fractal.image, 0, 0);
+    mlx_scroll_hook(fractal.mlx, (void *)scroll, &fractal);
     mlx_loop_hook(fractal.mlx, controls, &fractal);
     mlx_loop(fractal.mlx);
     ft_free((void **)&fractal.fract_name);
-    mlx_delete_image(fractal.mlx, fractal.image);
-    mlx_terminate(fractal.mlx);
-    return (0);
+    clean(&fractal);
 }
