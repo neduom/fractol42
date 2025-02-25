@@ -12,46 +12,48 @@
 
 #include "fractol_bonus.h"
 
-void    handle_movement(t_fractol *fractal, double move_step)
+void	handle_movement(t_fractol *fractal, double move_step)
 {
-    double  dx;
-    double  dy;
+	double	dx;
+	double	dy;
 
-    dx = 0.0;
-    dy = 0.0;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_UP))
-        dy -= move_step;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_DOWN))
-        dy += move_step;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_RIGHT))
-        dx += move_step;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_LEFT))
-        dx -= move_step;
-    fractal->center_pos.real += dx;
-    fractal->center_pos.img += dy;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_ADD) && fractal->max_iterations < 500)
-        fractal->max_iterations += 20;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_SUBTRACT) && fractal->max_iterations > 20)
-        fractal->max_iterations -= 20;
+	dx = 0.0;
+	dy = 0.0;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_UP))
+		dy -= move_step;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_DOWN))
+		dy += move_step;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_RIGHT))
+		dx += move_step;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_LEFT))
+		dx -= move_step;
+	fractal->center_pos.real += dx;
+	fractal->center_pos.img += dy;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_ADD)
+		&& fractal->max_iterations < 500)
+		fractal->max_iterations += 20;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_KP_SUBTRACT)
+		&& fractal->max_iterations > 20)
+		fractal->max_iterations -= 20;
 }
 
-void    control(void *arg)
-{   
-    t_fractol   *fractal;
-    double      move_step;
+void	control(void *arg)
+{
+	t_fractol	*fractal;
+	double		move_step;
 
-    fractal = (t_fractol *)arg;
-    move_step = 0.04 * fractal->zoom;
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_ESCAPE))
-    {
-        mlx_close_window(fractal->mlx);
-        mlx_delete_image(fractal->mlx, fractal->image);
-        mlx_terminate(fractal->mlx);
-        exit(EXIT_FAILURE);
-    }
-    if (mlx_is_key_down(fractal->mlx, MLX_KEY_SPACE))
-        fractal->color_shift = (fractal->color_shift + 1) % 3;
-    handle_movement(fractal, move_step);
-    if (!ft_strcmp(fractal->fract_name, "burning_ship"))
-        draw_burning_ship(fractal);
+	fractal = (t_fractol *)arg;
+	move_step = 0.04 * fractal->zoom;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_ESCAPE))
+	{
+		mlx_close_window(fractal->mlx);
+		mlx_delete_image(fractal->mlx, fractal->image);
+		mlx_terminate(fractal->mlx);
+		exit(EXIT_FAILURE);
+	}
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_SPACE))
+		fractal->color_shift = (fractal->color_shift + 1) % 3;
+	handle_movement(fractal, move_step);
+	if (!ft_strcmp(fractal->fract_name, "burning_ship"))
+		draw_burning_ship(fractal);
 }

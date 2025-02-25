@@ -12,30 +12,29 @@
 
 #include "fractol_bonus.h"
 
-void    ft_free(void **av)
+void	ft_free(void **av)
 {
-    if (av && *av)
-    {
-        free(*av);
-        *av = NULL;
-    }
+	if (av && *av)
+	{
+		free(*av);
+		*av = NULL;
+	}
 }
 
-void    clean(t_fractol *fract)
+void	clean(t_fractol *fract)
 {
-    if (fract->mlx && fract->image)
-        mlx_delete_image(fract->mlx, fract->image);
-    if (fract->mlx)
-    {
-        mlx_terminate(fract->mlx);
-        fract->mlx = NULL;
-    }
+	if (fract->mlx && fract->image)
+		mlx_delete_image(fract->mlx, fract->image);
+	if (fract->mlx)
+	{
+		mlx_terminate(fract->mlx);
+		fract->mlx = NULL;
+	}
 }
 
-void proc(void *str)
+void	proc(void *str)
 {
-    write(2, "Error\n", 6);
-    free(str);
-    exit(EXIT_FAILURE);
+	write(2, "Error\n", 6);
+	free(str);
+	exit(EXIT_FAILURE);
 }
-

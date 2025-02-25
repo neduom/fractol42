@@ -32,7 +32,7 @@ char	*ft_strdup(const char *s)
 
 int	ft_strlen(const char *s)
 {
-	int l;
+	int	l;
 
 	l = 0;
 	while (s[l] != '\0')
@@ -42,9 +42,11 @@ int	ft_strlen(const char *s)
 	return (l);
 }
 
-int    ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
@@ -55,4 +57,4 @@ double	scale(double value, double min, double max, double dimension)
 	return ((value / dimension) * (max - min) + min);
 }
 
-// trim 
+// trim
