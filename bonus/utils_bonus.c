@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:18:36 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/22 13:26:42 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:47:56 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_strlen(const char *s)
 int    ft_strcmp(const char *s1, const char *s2)
 {
 	int i = 0;
+	if (!s1 || !s2)
+		return (-1);
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
@@ -54,3 +56,4 @@ double	scale(double value, double min, double max, double dimension)
 {
 	return ((value / dimension) * (max - min) + min);
 }
+

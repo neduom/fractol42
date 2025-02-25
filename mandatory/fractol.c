@@ -6,15 +6,15 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:56:34 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/22 14:50:31 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:52:59 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int get_rgb(int red, int blue, int alpha)
+int get_rgb(int red, int green ,int blue, int alpha)
 {
-    return (red << 24 | blue << 8 | alpha);
+    return (red << 24 | green << 16 | blue << 8 | alpha);
 }
 
 int get_color(int i, t_fractol *fract)
@@ -22,14 +22,16 @@ int get_color(int i, t_fractol *fract)
     double  ratio;
 
     ratio = (double)i / fract->max_iterations;
-    int blue = (int)(100 * (1 - ratio) * ratio * ratio * ratio * 255);
-    int red = (int)(9 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 255);
-    return (get_rgb(red, blue, 255));
+    int blue = (int)(15 * (1 - ratio) * ratio * ratio * ratio * 100);
+    int green = (int)(15 * (1 - ratio) * (1 - ratio) * ratio * ratio * 100);
+    int red = (int)(50 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 200);
+    return (get_rgb(red, green, blue, 255));
 }
 
 char    *check(int ac, char **av, t_fractol *fractol)
 {
-    /// trim 
+    if (!fractol)
+        write(2, "error\n", 6) , exit(EXIT_FAILURE);
     if (!ft_strcmp(av[1], "mandelbrot"))
     {
         if(ac!=2){
@@ -76,13 +78,13 @@ int main(int ac ,char **av)
     if(ac>1)
          fractal.fract_name = check(ac, av, &fractal); 
     else
-        (write (2, "Error\n", 6), exit(EXIT_FAILURE));
+        (write (2, "please try mandelbrot or julia(real,img)\n", 41), exit(EXIT_FAILURE));
     fractal.mlx = mlx_init(WIDTH, HEIGHT, fractal.fract_name, false);
     if (!fractal.mlx)
-        return (1);
+        proc(fractal.mlx);
     fractal.image = mlx_new_image(fractal.mlx, WIDTH, HEIGHT);
     if (!fractal.image)
-        return (1);
+        return (write (2, "Error\n", 6), free(fractal.fract_name), clean(&fractal), 1);
     fractal.max_iterations = 100;
     fractal.zoom = 1.0;
     mlx_image_to_window(fractal.mlx, fractal.image, 0, 0);

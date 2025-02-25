@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:47:25 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/18 17:20:47 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:02:20 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ void    handle_movement(t_fractol *fractal, double move_step)
 }
 
 void    control(void *arg)
-{
+{   
     t_fractol   *fractal;
     double      move_step;
-    int         butoon;
 
-    butoon = 0;
     fractal = (t_fractol *)arg;
     move_step = 0.04 * fractal->zoom;
     if (mlx_is_key_down(fractal->mlx, MLX_KEY_ESCAPE))
@@ -51,6 +49,8 @@ void    control(void *arg)
         mlx_terminate(fractal->mlx);
         exit(EXIT_FAILURE);
     }
+    if (mlx_is_key_down(fractal->mlx, MLX_KEY_SPACE))
+        fractal->color_shift = (fractal->color_shift + 1) % 3;
     handle_movement(fractal, move_step);
     if (!ft_strcmp(fractal->fract_name, "burning_ship"))
         draw_burning_ship(fractal);

@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:14:34 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/22 15:40:27 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:11:13 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    julia(t_fractol *fractal, int x, int y)
         iterations++;
     }
     if (iterations == fractal->max_iterations)
-        fractal->color = get_rgb(0, 0, 255);
+        fractal->color = get_rgb(0, 0, 0, 255);
     else
         fractal->color = get_color(iterations, fractal);
 }

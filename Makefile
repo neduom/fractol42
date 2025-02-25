@@ -1,7 +1,7 @@
 NAME = fractol
-NAME_BONUS = burning_ship
+NAME_BONUS = fractol_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -fsanitize=leak -O3 -g -Iincludes
+CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -O3 -Iincludes
 
 
 SRCS = mandatory/controls.c mandatory/fractol.c mandatory/handling.c\
@@ -17,14 +17,9 @@ HEADER = mandatory/fractol.h
 HEADER_BONUS = bonus/fractol_bonus.h
 
 MLX_LIB = MLX42/build/libmlx42.a
-OS = $(shell uname -s)
 NPROC = $(shell nproc)
 
-ifeq ($(OS), Linux)
-	LINK = -IMLX42/include -ldl -lglfw -pthread -lm
-else
-	LINK = -lglfw -ldl -L/Users/$(USER)/.brew/opt/glfw/lib
-endif
+LINK = -IMLX42/include -ldl -lglfw -pthread -lm
 
 all: $(NAME)
 

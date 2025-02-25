@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:07:16 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/21 12:17:35 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:11:28 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void    mandelbrot(t_fractol *fractal)
         iterations++;
     }
     if (iterations == fractal->max_iterations)
-        fractal->color = get_rgb(0, 0, 255);
+        fractal->color = get_rgb(0, 0, 0, 255);
     else
         fractal->color = get_color(iterations, fractal);
 }
