@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:56:34 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/25 16:21:33 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:49:42 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_color(int i, t_fractol *fract)
 
 	ratio = (double)i / fract->max_iterations;
 	blue = (int)(15 * (1 - ratio) * ratio * ratio * ratio * 100);
-	green = (int)(15 * (1 - ratio) * (1 - ratio) * ratio * ratio * 100);
+	green = (int)(5 * (1 - ratio) * (1 - ratio) * ratio * ratio * 50);
 	red = (int)(50 * (1 - ratio) * (1 - ratio) * (1 - ratio) * ratio * 200);
 	return (get_rgb(red, green, blue, 255));
 }
@@ -47,7 +47,7 @@ char	*check(int ac, char **av, t_fractol *fractol)
 	else if (!ft_strcmp(av[1], "julia"))
 	{
 		if (ac != 4)
-			(write(2, "Error\n", 6), exit(EXIT_FAILURE));
+			(write(2, "please try real and img\n", 23), exit(EXIT_FAILURE));
 		fractol->c.real = ft_atof(av[2]);
 		fractol->c.img = ft_atof(av[3]);
 		fractol->scale = 1.0;
@@ -83,7 +83,7 @@ int	main(int ac, char **av)
 	if (ac > 1)
 		fractal.fract_name = check(ac, av, &fractal);
 	else
-		(write(2, "please try mandelbrot or julia\n", 41), exit(EXIT_FAILURE));
+		(write(2, "please try mandelbrot or julia\n", 35), exit(EXIT_FAILURE));
 	fractal.mlx = mlx_init(WIDTH, HEIGHT, fractal.fract_name, false);
 	if (!fractal.mlx)
 		proc(fractal.mlx);

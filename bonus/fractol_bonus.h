@@ -6,7 +6,7 @@
 /*   By: mel-moud <mel-moud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:16:13 by mel-moud          #+#    #+#             */
-/*   Updated: 2025/02/25 11:37:11 by mel-moud         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:47:56 by mel-moud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ void			clean(t_fractol *fract);
 void			handle_movement(t_fractol *fractal, double move_step);
 void			control(void *arg);
 void			proc(void *str);
+void			scroll(double x, double y, void *param);
 
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strlen(const char *s);
 int				get_color(int i, t_fractol *fractal);
 int				get_rgb(int red, int green, int blue, int alpha);
-void			scroll(double x, double y, void *param);
+
 double			scale(double value, double min, double max, double dimension);
 
 #endif
